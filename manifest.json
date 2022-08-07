@@ -1,0 +1,16 @@
+{
+  "name": "SourceGuard link",
+  "description": "link findings to GitLab",
+  "version": "0.1",
+  "manifest_version": 3,
+  "content_scripts": [
+    {
+      "matches": [
+        "https://portal.checkpoint.com/dashboard/sourceguard"
+      ],
+      "all_frames": true,
+      "js": ["content-script.js"],
+      "run_at": "document_end"
+    }
+  ]
+}
