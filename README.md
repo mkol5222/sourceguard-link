@@ -8,7 +8,7 @@
 
 ## How it works
 
-* implemented as injected script for URL https://portal.checkpoint.com/dashboard/sourceguard#/scan/sourcecode/\<scan-id\>
+* implemented as page content script injected for scan results URL https://portal.checkpoint.com/dashboard/sourceguard#/scan/sourcecode/\<scan-id\>
 * works in Line column of Remediation Summmary View - line numbers are blue and underlined and open source on new browser tab on click
 
 ## Usage
@@ -26,3 +26,6 @@
 * and it was able to enhance page with links to source code files
 ![](img/console-link-line.png)
 * consider page refresh in Remediation Summary View in case line number links are not blue+underlined
+
+## TODO
+* avoid need to refresh(reload) page in situations when we miss React re-reander the page and links are not recreated
