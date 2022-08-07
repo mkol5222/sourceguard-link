@@ -28,4 +28,4 @@
 * consider page refresh in Remediation Summary View in case line number links are not blue+underlined
 
 ## TODO
-* avoid need to refresh(reload) page in situations when we miss React re-reander the page and links are not recreated
+* avoid need to refresh(reload) page in situations when we miss React re-rendering the page and links are therefore not (re)created
