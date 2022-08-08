@@ -27,7 +27,7 @@ function getRepository() {
   }
   return repo;
 }
-function makeRepoLineLinskClickable(event) {
+function makeRepoLineLinskClickable() {
   // repo name
   const repo = getRepository();
 
@@ -87,21 +87,34 @@ function makeRepoLineLinskClickable(event) {
 
 // we are focusing on page rendering by ReactJS
 function nodeInsertedCallback(event) {
+  console.log('nodeInsertedCallback', event.target.tagName,(event.target.classList ? [...event.target.classList] : []).includes('remediation-table-container') , event.target)
   // page recreated?
-  if (event.target.tagName === "MAIN") {
+  if ((event.target.tagName === "MAIN") || ((event.target.tagName === "DIV") && ((event.target.classList ? [...event.target.classList] : []).includes('remediation-table-container')))) {
     // give React some time?
-    setTimeout(makeRepoLineLinskClickable, 2500);
+    setTimeout(makeRepoLineLinskClickable, 1200);
   }
 }
 
-// work only on SCAN RESULT page of SourceGuard
+function isScanResultsPage() {
+  // work only on SCAN RESULT page of SourceGuard
 const pageUrl = document.location.href;
 // https://portal.checkpoint.com/Dashboard/sourceguard#/scan/sourcecode/64de08445c34854becb6caf2b637906e7782872a35835817005c92c044148bbb-LQv59o
 const scanUrlRegex =
-  /https:\/\/portal\.checkpoint.com\/dashboard\/sourceguard#\/scan\/sourcecode\/([a-zA-Z0-9\-]+)$/;
+  /https:\/\/portal\.checkpoint.com\/[Dd]ashboard\/sourceguard#\/scan\/sourcecode\/([a-zA-Z0-9\-]+)$/;
 const urlMatch = pageUrl.match(scanUrlRegex);
-if (urlMatch) {
-  console.log("SourceGuard scan URL matched", urlMatch, urlMatch[1]);
+return urlMatch;
+}
+
+if (isScanResultsPage()) {
+  console.log("SourceGuard scan URL matched");
   // trigger page update on DOM manipulations by React
   document.addEventListener("DOMNodeInserted", nodeInsertedCallback);
 }
+
+window.addEventListener('hashchange', function() {
+  console.log('The hash has changed!', document.location.href )
+  if (isScanResultsPage()) {
+    console.log('The hash has changed!', 'need to update links')
+    setTimeout(makeRepoLineLinskClickable, 1200);
+  }
+}, false);
